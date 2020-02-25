@@ -1,3 +1,10 @@
+//---------------------------------------------------------------------
+// This code has access to HTML on page but not to function `download`
+// and to function assigned to button on toolbar.
+// It uses `onMessage.addListener` to get message from `background.js`
+// and execute `getLinks()` or `getImages()` which get links from HTML,
+// and send these links back to `background.js` (`sendResponse()`)
+//---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 // get `href` from all `a` on page
