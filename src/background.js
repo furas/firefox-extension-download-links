@@ -49,7 +49,7 @@ function download(downloadUrl, dowloadFilename) {
 //---------------------------------------------------------------------
 
 function notify(message) {
-  console.log("background script received message");
+  console.log("background script sends message");
   //var title = browser.i18n.getMessage("notificationTitle");
   //var content = browser.i18n.getMessage("notificationContent", message.url);
 

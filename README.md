@@ -1,2 +1,5 @@
-# firefox-extension-download-links
-It is simple Firefox extensions to get links with all &lt;img> and &lt;video> on active page and download it
+# firefox extension to download links
+
+It is simple Firefox extensions to get links from all `<img>` and `<video>` on active page and download to folder `~/xxx/{data}/{number}/`
+
+
