@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "Download Links",
+  "version": "0.0.9",
+  "author": "Bartłomiej 'furas' Burek",
+
+  "description": "Download Links 0.0.9 (updated: 2024.06.18)(created: 2022.09.05)",
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+
+  "permissions": [
+    "tabs",
+    "downloads",
+    "notifications"
+  ],
+
+  "icons": {
+    "48": "default.svg",
+    "96": "default.svg"
+  },
+  
+  "browser_action": {
+    "default_icon": "default.svg",
+    "default_title": "Download Links"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "download-links@furas.pl"
+    }
+  }
+}

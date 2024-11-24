@@ -5,10 +5,25 @@
 
 function formatDate(date) {
     var year = date.getFullYear();
+    
     var month = date.getMonth() + 1;
+    month = (month>9?'':'0') + month
+    
     var day = date.getDate();
+    day = (day>9?'':'0') + day
+    
+    var hours = date.getHours();
+    hours = (hours>9?'':'0') + hours
+    
+    var minutes = date.getMinutes();
+    minutes = (minutes>9?'':'0') + minutes
+    
+    var seconds = date.getSeconds();
+    seconds = (seconds>9?'':'0') + seconds
 
-    return [year, (month>9?'':'0') + month, (day>9?'':'0') + day].join('.');
+    date = [year, month, day].join('.');
+    time = [hours, minutes, seconds].join('.');
+    return [date, time];
 }
 
 //---------------------------------------------------------------------
@@ -19,13 +34,13 @@ var date = formatDate(new Date());
 //---------------------------------------------------------------------
 
 function onStartedDownload(id) {
-  //console.log(`Started downloading: ${id}`);
+  console.log(`Started downloading: ${id}`);
 }
 
 //---------------------------------------------------------------------
 
 function onFailedDownload(error) {
-  //console.log(`Download failed: ${error}`);
+  console.log(`Download failed: ${error}`);
 }
 
 //---------------------------------------------------------------------
@@ -48,7 +63,7 @@ function download(downloadUrl, dowloadFilename) {
 // send system notification with number of files to download
 //---------------------------------------------------------------------
 
-function notify(message) {
+function notify(title, message) {
   console.log("background script sends message");
   //var title = browser.i18n.getMessage("notificationTitle");
   //var content = browser.i18n.getMessage("notificationContent", message.url);
@@ -56,7 +71,7 @@ function notify(message) {
   browser.notifications.create({
     "type": "basic",
 //    "iconUrl": browser.extension.getURL("icons/link-48.png"),
-    "title": 'Download',
+    "title": title,
     "message": message
   });
 }
@@ -87,7 +102,8 @@ function handleResponse(message, sender, sendResponse) {
     //console.log('message.links:')
     //console.log(message.links);
 
-    var current_date = formatDate(new Date());
+    var parts = formatDate(new Date());
+    var current_date = parts[0];
 
     if(date !== current_date) {
         count = 0; // count
@@ -103,16 +119,16 @@ function handleResponse(message, sender, sendResponse) {
         return;
     }
 
-    notify(`[${date}/${count}] Items to download: ${items.length}`);
+    notify(`Download # ${count} (${items.length})`, `[${date} / ${count} - ${time}]\nItems to download: ${items.length}`);
 
-    //browser.downloads.showDefaultFolder();
+    //browser.downloads.showDefaultFolder();  // useful when program doesn't download
 
     for(let i = 0 ; i < items.length ; i++) {
 
         var item = items[i];
 
         var filename = item.split('?')[0].split('/').pop();
-        download(item, `xxx/${date}/${count}/${filename}`);
+        download(item, `xxx/${date}/${count}-${time}/${filename}`);
 
     }
 };
